@@ -1,12 +1,32 @@
 pipeline{
     agent any
 
+        environment {
+        imageName = "myphpapp"
+        registryCredentials = "nexus"
+        registry = "http://ec2-18-169-127-173.eu-west-2.compute.amazonaws.com:8085/"
+        dockerImage = ''
+        }
+
     stages{
-        stage("build test docker container"){
-            steps{
-                echo "popitka nomer 5"
-                sh 'docker build -t result . '
+        stage('Building image') {
+        steps{
+            script {
+            dockerImage = docker.build imageName
             }
         }
+        }
+
+        stage('Uploading to Nexus') {
+        steps{  
+            script {
+                docker.withRegistry( 'http://'+registry, registryCredentials ) {
+                dockerImage.push('latest')
+            }
+            }
+        }
+        }
     }
+
+    
 }
