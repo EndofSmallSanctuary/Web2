@@ -7,8 +7,9 @@ pipeline{
         registry = "ec2-18-169-127-173.eu-west-2.compute.amazonaws.com:8085/"
         dockerImage = ''
         }
+        
     triggers {
-    pollSCM('*****')    
+    pollSCM('* * * * *')    
     }
     
     
