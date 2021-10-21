@@ -1,0 +1,12 @@
+pipeline{
+    agent any
+
+    stages{
+        stage("build test docker container"){
+            steps{
+                echo "popitka nomer 5"
+                sh 'docker build -t result . '
+            }
+        }
+    }
+}
