@@ -36,7 +36,7 @@ pipeline{
         stage('notify web2 prod'){
             steps{
                 script{
-                    'sudo ssh -i ~/.ssh/Rose.pem ec2-user@3.8.19.161 "sudo bash deployconfig.sh" '
+                    sh 'sudo ssh -i ~/.ssh/Rose.pem ec2-user@3.8.19.161 "sudo bash deployconfig.sh" '
                 }
             }
         }
