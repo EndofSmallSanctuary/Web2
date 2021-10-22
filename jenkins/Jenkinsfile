@@ -1,0 +1,44 @@
+pipeline{
+    agent any
+
+        environment {
+        imageName = "web2"
+        registryCredentials = "nexus"
+        registry = "ec2-18-169-127-173.eu-west-2.compute.amazonaws.com:8085/"
+        dockerImage = ''
+        }
+        
+    triggers {
+    pollSCM('* * * * *')    
+    }
+    
+    
+    stages{
+
+        // stage('Building image') {
+        // steps{
+        //     script {
+        //     dockerImage = docker.build imageName
+        //     }
+        // }
+        // }
+
+        // stage('Uploading to Nexus') {
+        // steps{  
+        //     script {
+        //         docker.withRegistry( 'http://'+registry, registryCredentials ) {
+        //         dockerImage.push('latest')
+        //             }
+        //         }
+        //     }
+        // }
+
+        stage('notify web2 prod'){
+            steps{
+                script{
+                    sh 'ssh -i ~/.ssh/Rose.pem ec2-user@3.8.19.161 'sudo bash deployconfig.sh' '
+                }
+            }
+        }
+ }
+ }
